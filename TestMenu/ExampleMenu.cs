@@ -300,14 +300,21 @@ namespace TestMenu
                 Debug.WriteLine($"OnDynamicListItemSelect: [{_menu}, {_dynamicListItem}, {_currentItem}]");
             };
 
-            //DelayedConstructor();
+            DelayedConstructor();
         }
 
-        //private async void DelayedConstructor()
-        //{
-        //    await Delay(1000);
-        //    MenuController.MainMenu.OpenMenu();
-        //}
+        private async void DelayedConstructor()
+        {
+            Tick += MenuController.ProcessMenus;
+#if FIVEM
+            Tick += MenuController.DrawInstructionalButtons;
+#endif
+            Tick += MenuController.ProcessMainButtons;
+            Tick += MenuController.ProcessDirectionalButtons;
+            Tick += MenuController.ProcessToggleMenuButton;
+            Tick += MenuController.MenuButtonsDisableChecks;
+
+        }
 
     }
 }

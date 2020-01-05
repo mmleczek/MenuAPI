@@ -129,14 +129,7 @@ namespace MenuAPI
         /// </summary>
         public MenuController()
         {
-            Tick += ProcessMenus;
-#if FIVEM
-            Tick += DrawInstructionalButtons;
-#endif
-            Tick += ProcessMainButtons;
-            Tick += ProcessDirectionalButtons;
-            Tick += ProcessToggleMenuButton;
-            Tick += MenuButtonsDisableChecks;
+
         }
 
         /// <summary>
@@ -270,7 +263,7 @@ namespace MenuAPI
         /// Process the select & go back/cancel buttons.
         /// </summary>
         /// <returns></returns>
-        private async Task ProcessMainButtons()
+        public static async Task ProcessMainButtons()
         {
             if (IsAnyMenuOpen())
             {
@@ -358,7 +351,7 @@ namespace MenuAPI
         /// Returns true when one of the 'up' controls is currently pressed, only if the button can be active according to some conditions.
         /// </summary>
         /// <returns></returns>
-        private bool IsUpPressed()
+        private static bool IsUpPressed()
         {
             // Return false if the buttons are not currently enabled.
             if (!AreMenuButtonsEnabled)
@@ -405,7 +398,7 @@ namespace MenuAPI
         /// Returns true when one of the 'down' controls is currently pressed, only if the button can be active according to some conditions.
         /// </summary>
         /// <returns></returns>
-        private bool IsDownPressed()
+        private static bool IsDownPressed()
         {
             // Return false if the buttons are not currently enabled.
             if (!AreMenuButtonsEnabled)
@@ -453,7 +446,7 @@ namespace MenuAPI
         /// Processes the menu toggle button to check if the menu should open or close.
         /// </summary>
         /// <returns></returns>
-        private async Task ProcessToggleMenuButton()
+        public static async Task ProcessToggleMenuButton()
         {
 
 #if FIVEM
@@ -536,7 +529,7 @@ namespace MenuAPI
         /// Process left/right/up/down buttons (also holding down buttons will speed up after 3 iterations)
         /// </summary>
         /// <returns></returns>
-        private async Task ProcessDirectionalButtons()
+        public static async Task ProcessDirectionalButtons()
         {
             // Return if the buttons are not currently enabled.
             if (!AreMenuButtonsEnabled)
@@ -746,7 +739,7 @@ namespace MenuAPI
             }
         }
 
-        private async Task MenuButtonsDisableChecks()
+        public static async Task MenuButtonsDisableChecks()
         {
 
             bool isInputVisible() => UpdateOnscreenKeyboard() == 0;
@@ -926,7 +919,7 @@ namespace MenuAPI
         /// Draws all the menus that are visible on the screen.
         /// </summary>
         /// <returns></returns>
-        private static async Task ProcessMenus()
+        public static async Task ProcessMenus()
         {
 
             if (Menus.Count > 0 &&
@@ -981,7 +974,7 @@ namespace MenuAPI
         }
 
 #if FIVEM
-        internal static async Task DrawInstructionalButtons()
+        public static async Task DrawInstructionalButtons()
         {
             if (!Game.IsPaused && !Game.Player.IsDead && IsScreenFadedIn() && !IsPlayerSwitchInProgress() && !IsWarningMessageActive() && UpdateOnscreenKeyboard() != 0)
             {
